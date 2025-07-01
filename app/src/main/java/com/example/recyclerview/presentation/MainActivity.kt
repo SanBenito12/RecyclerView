@@ -54,25 +54,90 @@ class MainActivity : ComponentActivity() {
     }
 
     /**
-     * Crea datos de ejemplo para mostrar en la lista
+     * Crea datos de ejemplo para mostrar en la lista - Temática NFL
      */
     private fun createSampleData(): List<Item> {
         return listOf(
-            Item(1, "Configuración", "Ajustes del dispositivo"),
-            Item(2, "Ejercicio", "Rutinas y entrenamientos"),
-            Item(3, "Música", "Control de reproducción"),
-            Item(4, "Clima", "Pronóstico del tiempo"),
-            Item(5, "Mensajes", "SMS y notificaciones"),
-            Item(6, "Contactos", "Lista de contactos"),
-            Item(7, "Calendario", "Eventos y recordatorios"),
-            Item(8, "Cronómetro", "Medidor de tiempo"),
-            Item(9, "Alarmas", "Gestión de alarmas"),
-            Item(10, "Batería", "Estado de la batería"),
-            Item(11, "WiFi", "Configuración de red"),
-            Item(12, "Bluetooth", "Dispositivos conectados"),
-            Item(13, "Aplicaciones", "Apps instaladas"),
-            Item(14, "Notificaciones", "Centro de notificaciones"),
-            Item(15, "Ayuda", "Soporte y ayuda")
+            Item(
+                id = 1,
+                title = "Partidos de Hoy",
+                description = "Ver los juegos programados para hoy",
+                iconResource = R.drawable.ic_football,
+                backgroundColor = "#1B5E20", // Verde oscuro
+                textColor = "#FFFFFF"
+            ),
+            Item(
+                id = 2,
+                title = "Clasificación",
+                description = "Tabla de posiciones y standings",
+                iconResource = R.drawable.ic_trophy,
+                backgroundColor = "#B71C1C", // Rojo oscuro
+                textColor = "#FFFFFF"
+            ),
+            Item(
+                id = 3,
+                title = "Estadísticas",
+                description = "Stats de jugadores y equipos",
+                iconResource = R.drawable.ic_stats,
+                backgroundColor = "#1A237E", // Azul oscuro
+                textColor = "#FFFFFF"
+            ),
+            Item(
+                id = 4,
+                title = "Estadios",
+                description = "Información de los estadios",
+                iconResource = R.drawable.ic_stadium,
+                backgroundColor = "#4A148C", // Púrpura oscuro
+                textColor = "#FFFFFF"
+            ),
+            Item(
+                id = 5,
+                title = "Noticias",
+                description = "Últimas noticias de la NFL",
+                iconResource = R.drawable.ic_football,
+                backgroundColor = "#E65100", // Naranja oscuro
+                textColor = "#FFFFFF"
+            ),
+            Item(
+                id = 6,
+                title = "Playoffs",
+                description = "Bracket y calendario de playoffs",
+                iconResource = R.drawable.ic_trophy,
+                backgroundColor = "#BF360C", // Rojo-naranja oscuro
+                textColor = "#FFFFFF"
+            ),
+            Item(
+                id = 7,
+                title = "Fantasy Football",
+                description = "Tu liga de fantasy",
+                iconResource = R.drawable.ic_stats,
+                backgroundColor = "#2E7D32", // Verde
+                textColor = "#FFFFFF"
+            ),
+            Item(
+                id = 8,
+                title = "Historial",
+                description = "Resultados de temporadas anteriores",
+                iconResource = R.drawable.ic_stadium,
+                backgroundColor = "#5D4037", // Marrón
+                textColor = "#FFFFFF"
+            ),
+            Item(
+                id = 9,
+                title = "Draft",
+                description = "Información del draft de rookies",
+                iconResource = R.drawable.ic_football,
+                backgroundColor = "#37474F", // Gris azulado
+                textColor = "#FFFFFF"
+            ),
+            Item(
+                id = 10,
+                title = "Super Bowl",
+                description = "Historia y próximo Super Bowl",
+                iconResource = R.drawable.ic_trophy,
+                backgroundColor = "#1565C0", // Azul
+                textColor = "#FFFFFF"
+            )
         )
     }
 

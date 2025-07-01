@@ -1,72 +1,90 @@
-/* While this template provides a good starting point for using Wear Compose, you can always
- * take a look at https://github.com/android/wear-os-samples/tree/main/ComposeStarter to find the
- * most up to date changes to the libraries and their usages.
- */
-
 package com.example.recyclerview.presentation
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.wear.compose.material.MaterialTheme
-import androidx.wear.compose.material.Text
-import androidx.wear.compose.material.TimeText
-import androidx.wear.tooling.preview.devices.WearDevices
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.wear.widget.WearableRecyclerView
 import com.example.recyclerview.R
-import com.example.recyclerview.presentation.theme.RecyclerViewTheme
+import com.example.recyclerview.adapter.ItemAdapter
+import com.example.recyclerview.model.Item
 
+/**
+ * Actividad principal que muestra una lista de elementos usando RecyclerView
+ */
 class MainActivity : ComponentActivity() {
+
+    private lateinit var recyclerView: WearableRecyclerView
+    private lateinit var adapter: ItemAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
-
         super.onCreate(savedInstanceState)
 
         setTheme(android.R.style.Theme_DeviceDefault)
+        setContentView(R.layout.activity_main)
 
-        setContent {
-            WearApp("Android")
+        setupRecyclerView()
+    }
+
+    /**
+     * Configura el RecyclerView con datos de ejemplo
+     */
+    private fun setupRecyclerView() {
+        recyclerView = findViewById(R.id.recycler_view)
+
+        // Crear datos de ejemplo
+        val items = createSampleData()
+
+        // Configurar el adapter con el listener de clicks
+        adapter = ItemAdapter(items) { item ->
+            openDetailScreen(item)
+        }
+
+        // Configurar el RecyclerView
+        recyclerView.apply {
+            layoutManager = LinearLayoutManager(this@MainActivity)
+            adapter = this@MainActivity.adapter
+
+            // Habilitar el scrolling circular típico de Wear OS
+            isEdgeItemsCenteringEnabled = true
+            isCircularScrollingGestureEnabled = true
         }
     }
-}
 
-@Composable
-fun WearApp(greetingName: String) {
-    RecyclerViewTheme {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colors.background),
-            contentAlignment = Alignment.Center
-        ) {
-            TimeText()
-            Greeting(greetingName = greetingName)
-        }
+    /**
+     * Crea datos de ejemplo para mostrar en la lista
+     */
+    private fun createSampleData(): List<Item> {
+        return listOf(
+            Item(1, "Configuración", "Ajustes del dispositivo"),
+            Item(2, "Ejercicio", "Rutinas y entrenamientos"),
+            Item(3, "Música", "Control de reproducción"),
+            Item(4, "Clima", "Pronóstico del tiempo"),
+            Item(5, "Mensajes", "SMS y notificaciones"),
+            Item(6, "Contactos", "Lista de contactos"),
+            Item(7, "Calendario", "Eventos y recordatorios"),
+            Item(8, "Cronómetro", "Medidor de tiempo"),
+            Item(9, "Alarmas", "Gestión de alarmas"),
+            Item(10, "Batería", "Estado de la batería"),
+            Item(11, "WiFi", "Configuración de red"),
+            Item(12, "Bluetooth", "Dispositivos conectados"),
+            Item(13, "Aplicaciones", "Apps instaladas"),
+            Item(14, "Notificaciones", "Centro de notificaciones"),
+            Item(15, "Ayuda", "Soporte y ayuda")
+        )
     }
-}
 
-@Composable
-fun Greeting(greetingName: String) {
-    Text(
-        modifier = Modifier.fillMaxWidth(),
-        textAlign = TextAlign.Center,
-        color = MaterialTheme.colors.primary,
-        text = stringResource(R.string.hello_world, greetingName)
-    )
-}
-
-@Preview(device = WearDevices.SMALL_ROUND, showSystemUi = true)
-@Composable
-fun DefaultPreview() {
-    WearApp("Preview Android")
+    /**
+     * Abre la pantalla de detalles con la información del elemento seleccionado
+     */
+    private fun openDetailScreen(item: Item) {
+        val intent = Intent(this, DetailActivity::class.java).apply {
+            putExtra(DetailActivity.EXTRA_ITEM_TITLE, item.title)
+            putExtra(DetailActivity.EXTRA_ITEM_DESCRIPTION, item.description)
+            putExtra(DetailActivity.EXTRA_ITEM_ID, item.id)
+        }
+        startActivity(intent)
+    }
 }

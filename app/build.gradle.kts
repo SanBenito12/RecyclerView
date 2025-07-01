@@ -14,7 +14,6 @@ android {
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
-
     }
 
     buildTypes {
@@ -39,7 +38,6 @@ android {
 }
 
 dependencies {
-
     implementation(libs.play.services.wearable)
     implementation(platform(libs.compose.bom))
     implementation(libs.ui)
@@ -50,6 +48,13 @@ dependencies {
     implementation(libs.wear.tooling.preview)
     implementation(libs.activity.compose)
     implementation(libs.core.splashscreen)
+
+    // Agregamos estas dependencias para RecyclerView en Wear OS
+    implementation("androidx.wear:wear:1.3.0")
+    implementation("androidx.recyclerview:recyclerview:1.3.2")
+    implementation("androidx.wear:wear-ongoing:1.0.0")
+    implementation("androidx.wear:wear-input:1.1.0")
+
     androidTestImplementation(platform(libs.compose.bom))
     androidTestImplementation(libs.ui.test.junit4)
     debugImplementation(libs.ui.tooling)

@@ -23,6 +23,7 @@
             android:name="com.google.android.wearable.standalone"
             android:value="true" />
 
+        <!-- Actividad principal con RecyclerView -->
         <activity
             android:name=".presentation.MainActivity"
             android:exported="true"
@@ -30,10 +31,17 @@
             android:theme="@style/MainActivityTheme.Starting">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- Actividad de detalles -->
+        <activity
+            android:name=".presentation.DetailActivity"
+            android:exported="false"
+            android:parentActivityName=".presentation.MainActivity"
+            android:theme="@android:style/Theme.DeviceDefault" />
+
     </application>
 
 </manifest>

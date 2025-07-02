@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="round_margin">8dp</dimen>
+    <dimen name="item_height">60dp</dimen>
+    <dimen name="icon_container_size">32dp</dimen>
+    <dimen name="icon_size">24dp</dimen>
+</resources>

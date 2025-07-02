@@ -1,66 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- Layout optimizado para pantallas redondas de Wear OS -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:padding="16dp"
+    android:layout_height="64dp"
+    android:layout_marginVertical="3dp"
+    android:layout_marginHorizontal="@dimen/round_margin"
     android:background="?android:attr/selectableItemBackground"
     android:clickable="true"
-    android:focusable="true"
-    android:layout_marginVertical="4dp"
-    android:layout_marginHorizontal="8dp">
+    android:focusable="true">
 
-    <!-- Ícono del deporte/equipo -->
-    <ImageView
-        android:id="@+id/iv_icon"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_gravity="center_vertical"
-        android:layout_marginEnd="16dp"
-        android:scaleType="centerCrop"
-        android:background="@drawable/icon_background"
-        android:padding="8dp"
-        android:src="@android:drawable/ic_menu_info_details" />
-
-    <!-- Contenedor de texto -->
+    <!-- Contenedor principal con fondo redondeado -->
     <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        android:layout_gravity="center_vertical">
+        android:id="@+id/item_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="16dp"
+        android:background="@drawable/item_background_round">
 
+        <!-- Ícono en círculo -->
+        <FrameLayout
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/icon_circle_white">
+
+            <ImageView
+                android:id="@+id/iv_icon"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_football" />
+
+        </FrameLayout>
+
+        <!-- Título centrado -->
         <TextView
             android:id="@+id/tv_title"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:textColor="@android:color/white"
-            android:text="Título del elemento"
+            android:textColor="#FFFFFF"
             android:maxLines="1"
-            android:ellipsize="end" />
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:text="Título" />
 
-        <TextView
-            android:id="@+id/tv_description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:textSize="12sp"
-            android:textColor="@android:color/secondary_text_dark"
-            android:text="Descripción del elemento"
-            android:maxLines="2"
-            android:ellipsize="end" />
+        <!-- Indicador de navegación -->
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="8dp"
+            android:src="@android:drawable/ic_menu_more"
+            android:alpha="0.7"
+            android:scaleType="centerInside" />
 
     </LinearLayout>
 
-    <!-- Flecha indicadora -->
-    <ImageView
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_gravity="center_vertical"
-        android:layout_marginStart="8dp"
-        android:src="@android:drawable/ic_menu_more"
-        android:alpha="0.6" />
-
-</LinearLayout>
+</FrameLayout>

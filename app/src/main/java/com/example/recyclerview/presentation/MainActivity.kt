@@ -2,16 +2,17 @@ package com.example.recyclerview.presentation
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.wear.widget.WearableRecyclerView
+import androidx.wear.widget.WearableLinearLayoutManager
 import com.example.recyclerview.R
 import com.example.recyclerview.adapter.ItemAdapter
 import com.example.recyclerview.model.Item
 
 /**
- * Actividad principal que muestra una lista de elementos usando RecyclerView
+ * Actividad principal optimizada para pantallas redondas de Wear OS
  */
 class MainActivity : ComponentActivity() {
 
@@ -29,120 +30,166 @@ class MainActivity : ComponentActivity() {
     }
 
     /**
-     * Configura el RecyclerView con datos de ejemplo
+     * Configura el RecyclerView optimizado para pantallas redondas
      */
     private fun setupRecyclerView() {
         recyclerView = findViewById(R.id.recycler_view)
 
-        // Crear datos de ejemplo
-        val items = createSampleData()
+        // Datos simplificados para mejor legibilidad en pantallas pequeñas
+        val items = createInteractiveData()
 
-        // Configurar el adapter con el listener de clicks
         adapter = ItemAdapter(items) { item ->
-            openDetailScreen(item)
+            executeItemAction(item)
         }
 
-        // Configurar el RecyclerView
         recyclerView.apply {
-            layoutManager = LinearLayoutManager(this@MainActivity)
+            // Usa WearableLinearLayoutManager para mejor rendimiento
+            layoutManager = WearableLinearLayoutManager(this@MainActivity)
             adapter = this@MainActivity.adapter
 
-            // Habilitar el scrolling circular típico de Wear OS
+            // Optimizaciones específicas para Wear OS redondo
             isEdgeItemsCenteringEnabled = true
             isCircularScrollingGestureEnabled = true
+
+            // Mejora la navegación con teclado/corona
+            requestFocus()
         }
     }
 
     /**
-     * Crea datos de ejemplo para mostrar en la lista - Temática NFL
+     * Datos optimizados: menos items, títulos más cortos
      */
-    private fun createSampleData(): List<Item> {
+    private fun createInteractiveData(): List<Item> {
         return listOf(
             Item(
                 id = 1,
-                title = "Partidos de Hoy",
-                description = "Ver los juegos programados para hoy",
-                iconResource = R.drawable.ic_football,
-                backgroundColor = "#1B5E20", // Verde oscuro
-                textColor = "#FFFFFF"
+                title = "Contador",
+                description = "Contador interactivo",
+                iconResource = android.R.drawable.ic_input_add, // Ícono + del sistema
+                backgroundColor = "#1B5E20"
             ),
             Item(
                 id = 2,
-                title = "Clasificación",
-                description = "Tabla de posiciones y standings",
-                iconResource = R.drawable.ic_trophy,
-                backgroundColor = "#B71C1C", // Rojo oscuro
-                textColor = "#FFFFFF"
+                title = "Sonidos",
+                description = "Reproducir sonidos",
+                iconResource = android.R.drawable.ic_media_play, // Ícono play
+                backgroundColor = "#B71C1C"
             ),
             Item(
                 id = 3,
-                title = "Estadísticas",
-                description = "Stats de jugadores y equipos",
-                iconResource = R.drawable.ic_stats,
-                backgroundColor = "#1A237E", // Azul oscuro
-                textColor = "#FFFFFF"
+                title = "Cronómetro",
+                description = "Abrir app de reloj",
+                iconResource = android.R.drawable.ic_menu_recent_history, // Ícono tiempo
+                backgroundColor = "#1A237E"
             ),
             Item(
                 id = 4,
-                title = "Estadios",
-                description = "Información de los estadios",
-                iconResource = R.drawable.ic_stadium,
-                backgroundColor = "#4A148C", // Púrpura oscuro
-                textColor = "#FFFFFF"
+                title = "Colores",
+                description = "Cambiar colores",
+                iconResource = android.R.drawable.ic_menu_edit, // Ícono editar
+                backgroundColor = "#BF360C"
             ),
             Item(
                 id = 5,
-                title = "Noticias",
-                description = "Últimas noticias de la NFL",
-                iconResource = R.drawable.ic_football,
-                backgroundColor = "#E65100", // Naranja oscuro
-                textColor = "#FFFFFF"
-            ),
-            Item(
-                id = 6,
-                title = "Playoffs",
-                description = "Bracket y calendario de playoffs",
-                iconResource = R.drawable.ic_trophy,
-                backgroundColor = "#BF360C", // Rojo-naranja oscuro
-                textColor = "#FFFFFF"
-            ),
-            Item(
-                id = 7,
-                title = "Fantasy Football",
-                description = "Tu liga de fantasy",
-                iconResource = R.drawable.ic_stats,
-                backgroundColor = "#2E7D32", // Verde
-                textColor = "#FFFFFF"
-            ),
-            Item(
-                id = 8,
-                title = "Historial",
-                description = "Resultados de temporadas anteriores",
-                iconResource = R.drawable.ic_stadium,
-                backgroundColor = "#5D4037", // Marrón
-                textColor = "#FFFFFF"
-            ),
-            Item(
-                id = 9,
-                title = "Draft",
-                description = "Información del draft de rookies",
-                iconResource = R.drawable.ic_football,
-                backgroundColor = "#37474F", // Gris azulado
-                textColor = "#FFFFFF"
-            ),
-            Item(
-                id = 10,
-                title = "Super Bowl",
-                description = "Historia y próximo Super Bowl",
-                iconResource = R.drawable.ic_trophy,
-                backgroundColor = "#1565C0", // Azul
-                textColor = "#FFFFFF"
+                title = "Información",
+                description = "Detalles del reloj",
+                iconResource = android.R.drawable.ic_menu_info_details, // Ícono info
+                backgroundColor = "#2E7D32"
             )
         )
     }
 
     /**
-     * Abre la pantalla de detalles con la información del elemento seleccionado
+     * Ejecuta diferentes acciones según el item seleccionado
+     */
+    private fun executeItemAction(item: Item) {
+        when (item.id) {
+            1 -> openCounter()
+            2 -> openSoundPlayer()
+            3 -> openStopwatch()
+            4 -> openColorChanger()
+            5 -> openDetailScreen(item)
+            else -> showToast("Acción no definida")
+        }
+    }
+
+    /**
+     * Abre pantalla con contador interactivo
+     */
+    private fun openCounter() {
+        val intent = Intent(this, DetailActivity::class.java).apply {
+            putExtra(DetailActivity.EXTRA_ITEM_TITLE, "Contador")
+            putExtra(DetailActivity.EXTRA_ITEM_DESCRIPTION, "Toca el botón para contar")
+            putExtra(DetailActivity.EXTRA_ITEM_ID, 1)
+        }
+        startActivity(intent)
+    }
+
+    /**
+     * Abre reproductor de sonidos
+     */
+    private fun openSoundPlayer() {
+        val intent = Intent(this, DetailActivity::class.java).apply {
+            putExtra(DetailActivity.EXTRA_ITEM_TITLE, "Reproductor")
+            putExtra(DetailActivity.EXTRA_ITEM_DESCRIPTION, "Toca para reproducir sonidos")
+            putExtra(DetailActivity.EXTRA_ITEM_ID, 2)
+        }
+        startActivity(intent)
+    }
+
+    /**
+     * Abre la app nativa de cronómetro/reloj del sistema
+     */
+    private fun openStopwatch() {
+        try {
+            // Intenta abrir la app de reloj/cronómetro nativa
+            val intent = Intent().apply {
+                action = "android.intent.action.SHOW_ALARMS"
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            }
+            startActivity(intent)
+        } catch (e: Exception) {
+            // Si no funciona, intenta con timer
+            try {
+                val timerIntent = Intent().apply {
+                    action = "android.intent.action.SET_TIMER"
+                    putExtra("android.intent.extra.alarm.LENGTH", 60)
+                    putExtra("android.intent.extra.alarm.MESSAGE", "Timer desde RecyclerView")
+                    flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                }
+                startActivity(timerIntent)
+            } catch (ex: Exception) {
+                // Si tampoco funciona, intenta abrir la app de reloj genérica
+                try {
+                    val clockIntent = Intent().apply {
+                        action = Intent.ACTION_MAIN
+                        addCategory(Intent.CATEGORY_LAUNCHER)
+                        setPackage("com.google.android.deskclock")
+                        flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                    }
+                    startActivity(clockIntent)
+                } catch (finalEx: Exception) {
+                    // Último recurso: mostrar mensaje
+                    showToast("No se puede abrir cronómetro")
+                }
+            }
+        }
+    }
+
+    /**
+     * Cambiador de colores de fondo
+     */
+    private fun openColorChanger() {
+        val intent = Intent(this, DetailActivity::class.java).apply {
+            putExtra(DetailActivity.EXTRA_ITEM_TITLE, "Colores")
+            putExtra(DetailActivity.EXTRA_ITEM_DESCRIPTION, "Cambia el color de fondo")
+            putExtra(DetailActivity.EXTRA_ITEM_ID, 4)
+        }
+        startActivity(intent)
+    }
+
+    /**
+     * Abre la pantalla de detalles normal
      */
     private fun openDetailScreen(item: Item) {
         val intent = Intent(this, DetailActivity::class.java).apply {
@@ -151,5 +198,12 @@ class MainActivity : ComponentActivity() {
             putExtra(DetailActivity.EXTRA_ITEM_ID, item.id)
         }
         startActivity(intent)
+    }
+
+    /**
+     * Muestra un toast con mensaje
+     */
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 }

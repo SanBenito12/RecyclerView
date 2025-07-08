@@ -14,7 +14,7 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.example.recyclerview.R
 
 /**
- * Actividad de detalles mejorada con funciones especiales
+ * Actividad de detalles
  */
 class DetailActivity : ComponentActivity() {
 
@@ -43,7 +43,6 @@ class DetailActivity : ComponentActivity() {
 
         setupViews(itemTitle, itemDescription, itemId)
 
-        // Inicializar generador de tonos para sonidos
         try {
             toneGenerator = ToneGenerator(AudioManager.STREAM_MUSIC, 80)
         } catch (e: Exception) {
@@ -61,7 +60,6 @@ class DetailActivity : ComponentActivity() {
         descriptionTextView.text = description
         idTextView.text = "ID: $id"
 
-        // Configurar botón según el tipo de item
         when (id) {
             1 -> {
                 actionButton.text = "🔢 Contar +"
@@ -78,7 +76,7 @@ class DetailActivity : ComponentActivity() {
             else -> {
                 actionButton.text = "✨ Acción Especial"
                 actionButton.setOnClickListener {
-                    descriptionTextView.text = "¡Acción ejecutada con éxito! 🎉"
+                    descriptionTextView.text = "¡Acción ejecutada con éxito!"
                 }
             }
         }
@@ -95,13 +93,12 @@ class DetailActivity : ComponentActivity() {
             
             Número actual: $counter
             
-            ¡Sigue tocando para contar! 🚀
         """.trimIndent()
 
         // Vibración ligera en cada toque
         try {
             val vibrator = getSystemService(VIBRATOR_SERVICE) as android.os.Vibrator
-            vibrator.vibrate(50) // Vibración corta
+            vibrator.vibrate(50)
         } catch (e: Exception) {
             // Ignorar si no puede vibrar
         }
@@ -111,7 +108,6 @@ class DetailActivity : ComponentActivity() {
      * Cambiar color de fondo dinámicamente
      */
     private fun changeBackgroundColor() {
-        // Cambiar el fondo del FrameLayout principal en lugar del root
         val mainLayout = findViewById<View>(R.id.main_background)
             ?: findViewById<View>(android.R.id.content) // Fallback al root
         val descriptionTextView = findViewById<TextView>(R.id.tv_detail_description)
@@ -129,26 +125,22 @@ class DetailActivity : ComponentActivity() {
             🎨 COLOR CAMBIADO
             
             Color actual: ${colorNames[nextColorIndex]}
-            
-            Toca para cambiar al siguiente color.
-            ¡Personaliza tu pantalla! ✨
-            
+                        
             Total de colores: ${colors.size}
         """.trimIndent()
 
-        // Ajustar color de texto según el fondo para mejor legibilidad
         when (newColor) {
-            "#FF9800" -> { // Amarillo
+            "#FF9800" -> {
                 descriptionTextView.setTextColor(Color.BLACK)
                 findViewById<TextView>(R.id.tv_detail_title)?.setTextColor(Color.BLACK)
                 findViewById<TextView>(R.id.tv_detail_id)?.setTextColor(Color.BLACK)
             }
-            "#4CAF50" -> { // Verde claro
+            "#4CAF50" -> {
                 descriptionTextView.setTextColor(Color.BLACK)
                 findViewById<TextView>(R.id.tv_detail_title)?.setTextColor(Color.BLACK)
                 findViewById<TextView>(R.id.tv_detail_id)?.setTextColor(Color.BLACK)
             }
-            else -> { // Colores oscuros
+            else -> {
                 descriptionTextView.setTextColor(Color.WHITE)
                 findViewById<TextView>(R.id.tv_detail_title)?.setTextColor(Color.WHITE)
                 findViewById<TextView>(R.id.tv_detail_id)?.setTextColor(Color.GRAY)
@@ -162,7 +154,6 @@ class DetailActivity : ComponentActivity() {
     private fun playNextSound() {
         val descriptionTextView = findViewById<TextView>(R.id.tv_detail_description)
 
-        // Ciclar entre diferentes tonos
         soundIndex = (soundIndex % 8) + 1
 
         try {
@@ -173,9 +164,7 @@ class DetailActivity : ComponentActivity() {
                         🎵 NOTA: DO
                         
                         Sonido 1/8
-                        Tono bajo y suave
                         
-                        ¡Toca para siguiente nota! 🎶
                     """.trimIndent()
                 }
                 2 -> {
@@ -184,9 +173,7 @@ class DetailActivity : ComponentActivity() {
                         🎶 NOTA: RE
                         
                         Sonido 2/8
-                        Tono medio-bajo
                         
-                        ¡Creando melodía! 🎵
                     """.trimIndent()
                 }
                 3 -> {
@@ -195,9 +182,7 @@ class DetailActivity : ComponentActivity() {
                         🎵 NOTA: MI
                         
                         Sonido 3/8
-                        Tono medio
                         
-                        ¡Suena genial! 🎶
                     """.trimIndent()
                 }
                 4 -> {
@@ -208,7 +193,6 @@ class DetailActivity : ComponentActivity() {
                         Sonido 4/8
                         Tono medio-alto
                         
-                        ¡Mitad del camino! 🎵
                     """.trimIndent()
                 }
                 5 -> {
@@ -217,9 +201,7 @@ class DetailActivity : ComponentActivity() {
                         🎵 NOTA: SOL
                         
                         Sonido 5/8
-                        Tono alto y claro
                         
-                        ¡Melodioso! 🎶
                     """.trimIndent()
                 }
                 6 -> {
@@ -228,9 +210,7 @@ class DetailActivity : ComponentActivity() {
                         🎶 NOTA: LA
                         
                         Sonido 6/8
-                        Tono agudo
-                        
-                        ¡Casi terminamos! 🎵
+                                                
                     """.trimIndent()
                 }
                 7 -> {
@@ -239,9 +219,7 @@ class DetailActivity : ComponentActivity() {
                         🎵 NOTA: SI
                         
                         Sonido 7/8
-                        Tono muy agudo
                         
-                        ¡Penúltima nota! 🎶
                     """.trimIndent()
                 }
                 8 -> {
@@ -258,12 +236,10 @@ class DetailActivity : ComponentActivity() {
             }
         } catch (e: Exception) {
             descriptionTextView.text = """
-                🔇 ERROR DE SONIDO
                 
                 No se puede reproducir audio
                 en este dispositivo.
                 
-                ¡Pero puedes imaginar la melodía! 🎵
             """.trimIndent()
         }
     }

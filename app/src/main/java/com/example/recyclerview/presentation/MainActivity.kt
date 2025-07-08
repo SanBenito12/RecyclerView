@@ -12,7 +12,7 @@ import com.example.recyclerview.adapter.ItemAdapter
 import com.example.recyclerview.model.Item
 
 /**
- * Actividad principal optimizada para pantallas redondas de Wear OS
+ * Actividad principal optimizada para pantallas redondas
  */
 class MainActivity : ComponentActivity() {
 
@@ -35,7 +35,6 @@ class MainActivity : ComponentActivity() {
     private fun setupRecyclerView() {
         recyclerView = findViewById(R.id.recycler_view)
 
-        // Datos simplificados para mejor legibilidad en pantallas pequeñas
         val items = createInteractiveData()
 
         adapter = ItemAdapter(items) { item ->
@@ -43,21 +42,18 @@ class MainActivity : ComponentActivity() {
         }
 
         recyclerView.apply {
-            // Usa WearableLinearLayoutManager para mejor rendimiento
             layoutManager = WearableLinearLayoutManager(this@MainActivity)
             adapter = this@MainActivity.adapter
 
-            // Optimizaciones específicas para Wear OS redondo
             isEdgeItemsCenteringEnabled = true
             isCircularScrollingGestureEnabled = true
 
-            // Mejora la navegación con teclado/corona
             requestFocus()
         }
     }
 
     /**
-     * Datos optimizados: menos items, títulos más cortos
+     * Datos optimizados
      */
     private fun createInteractiveData(): List<Item> {
         return listOf(
@@ -65,35 +61,35 @@ class MainActivity : ComponentActivity() {
                 id = 1,
                 title = "Contador",
                 description = "Contador interactivo",
-                iconResource = android.R.drawable.ic_input_add, // Ícono + del sistema
+                iconResource = android.R.drawable.ic_input_add,
                 backgroundColor = "#1B5E20"
             ),
             Item(
                 id = 2,
                 title = "Sonidos",
                 description = "Reproducir sonidos",
-                iconResource = android.R.drawable.ic_media_play, // Ícono play
+                iconResource = android.R.drawable.ic_media_play,
                 backgroundColor = "#B71C1C"
             ),
             Item(
                 id = 3,
-                title = "Cronómetro",
+                title = "Alarma",
                 description = "Abrir app de reloj",
-                iconResource = android.R.drawable.ic_menu_recent_history, // Ícono tiempo
+                iconResource = android.R.drawable.ic_menu_recent_history,
                 backgroundColor = "#1A237E"
             ),
             Item(
                 id = 4,
                 title = "Colores",
                 description = "Cambiar colores",
-                iconResource = android.R.drawable.ic_menu_edit, // Ícono editar
+                iconResource = android.R.drawable.ic_menu_edit,
                 backgroundColor = "#BF360C"
             ),
             Item(
                 id = 5,
                 title = "Información",
                 description = "Detalles del reloj",
-                iconResource = android.R.drawable.ic_menu_info_details, // Ícono info
+                iconResource = android.R.drawable.ic_menu_info_details,
                 backgroundColor = "#2E7D32"
             )
         )
@@ -142,14 +138,12 @@ class MainActivity : ComponentActivity() {
      */
     private fun openStopwatch() {
         try {
-            // Intenta abrir la app de reloj/cronómetro nativa
             val intent = Intent().apply {
                 action = "android.intent.action.SHOW_ALARMS"
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK
             }
             startActivity(intent)
         } catch (e: Exception) {
-            // Si no funciona, intenta con timer
             try {
                 val timerIntent = Intent().apply {
                     action = "android.intent.action.SET_TIMER"
@@ -159,7 +153,6 @@ class MainActivity : ComponentActivity() {
                 }
                 startActivity(timerIntent)
             } catch (ex: Exception) {
-                // Si tampoco funciona, intenta abrir la app de reloj genérica
                 try {
                     val clockIntent = Intent().apply {
                         action = Intent.ACTION_MAIN
@@ -169,7 +162,6 @@ class MainActivity : ComponentActivity() {
                     }
                     startActivity(clockIntent)
                 } catch (finalEx: Exception) {
-                    // Último recurso: mostrar mensaje
                     showToast("No se puede abrir cronómetro")
                 }
             }
